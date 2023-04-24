@@ -4,6 +4,9 @@ import { InferGetServerSidePropsType } from "next";
 import AddBudgetCategory from "../components/AddBudgetCategory";
 import MonthlyExpense from "../components/MonthlyExpense";
 import AddExpense from "../components/AddExpense";
+import SetIncome from "../components/SetIncome";
+import { useState } from "react";
+import Link from "next/link";
 
 export async function getServerSideProps() {
   try {
@@ -31,12 +34,19 @@ export async function getServerSideProps() {
 export default function Home({
   isConnected,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [activeButton, setActiveButton] = useState(0);
+
   return (
     <div className="flex flex-col items-center">
       <div className="bg-white shadow-lg rounded-lg px-8 py-6 sm:max-w-md sm:w-full">
         <div className="text-3xl text-green-600 mb-4">Budger Gur</div>
+
         <AddBudgetCategory />
+
         <AddExpense />
+
+        <SetIncome />
+
         <MonthlyExpense />
       </div>
     </div>

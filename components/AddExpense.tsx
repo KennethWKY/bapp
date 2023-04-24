@@ -7,9 +7,8 @@ export default function AddExpense() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getCategory();
-      const data = await response;
-      setExpenseCategory(data);
+      const categoryData = await getCategory();
+      setExpenseCategory(categoryData);
     };
     fetchData();
   }, [selectedCategory]);
@@ -26,36 +25,48 @@ export default function AddExpense() {
         <div className="text-2xl text-green-600 mb-4">Add Expense</div>
         <form method="POST" action="/api/expense">
           <div className="flex flex-col mb-4">
-            <label className="text-lg mb-2" htmlFor="type">
-              Type
-            </label>
-            <input
-              className="border border-gray-400 p-2 rounded-lg"
-              type="text"
-              name="type"
-              id="type"
-            />
-          </div>
-          <div className="flex flex-col mb-4">
             <label className="text-lg mb-2" htmlFor="category">
               Category
             </label>
             <select
               className="border border-gray-400 p-2 rounded-lg"
-              name="category"
-              id="category"
+              name="type"
+              id="type"
               value={selectedCategory}
               onChange={handleSelectChange}
             >
               <option value="">Select category</option>
               {expenseCategory &&
                 expenseCategory.map((category) => (
-                  <option key={category._id} value={category.category}>
+                  <option key={category.category} value={category.category}>
                     {category.category}
                   </option>
                 ))}
             </select>
           </div>
+          <div className="flex flex-col mb-4">
+            <label className="text-lg mb-2" htmlFor="type">
+              Description
+            </label>
+            <input
+              className="border border-gray-400 p-2 rounded-lg"
+              type="text"
+              name="descr"
+              id="descr"
+            />
+          </div>
+          <div className="flex flex-col mb-4">
+            <label className="text-lg mb-2" htmlFor="type">
+              Amount
+            </label>
+            <input
+              className="border border-gray-400 p-2 rounded-lg"
+              type="number"
+              name="amount"
+              id="amount"
+            />
+          </div>
+
           <button
             className="bg-green-600 text-white py-2 px-4 rounded-lg"
             type="submit"

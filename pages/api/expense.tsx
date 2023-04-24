@@ -4,6 +4,7 @@ import { Document, InsertOneResult, ObjectId, WithId } from "mongodb";
 export default async (
   req: { query?: any; body?: any; method?: any },
   res: {
+    [x: string]: any;
     json: (arg0: WithId<Document>[]) => void;
     send: (arg0: InsertOneResult<Document>) => void;
   }
@@ -12,10 +13,13 @@ export default async (
   const owner = new ObjectId("64447d7069d35e23c1b2351c");
 
   switch (method) {
-    //Get all expense
+    //Get all expense in selected month
     case "GET":
       const params = new URLSearchParams(req.query);
       const month = params.get("month");
+      if (!month) {
+        return res.status(400).json({ error: "Missing 'month' parameter" });
+      }
       const [mon, yearStr] = month.split(" ");
       const year = parseInt(yearStr);
       const monthLookup: { [key: string]: number } = {
@@ -80,10 +84,10 @@ export default async (
         const client = await clientPromise;
         const db = client.db("budget");
         const date = new Date();
-        const { type, amount } = req.body;
+        const { type, amount, descr } = req.body;
         const result = await db
           .collection("user_transaction_template")
-          .insertOne({ owner, type, amount, date });
+          .insertOne({ owner, type, descr, amount, date });
         res.send(result);
       } catch (e) {
         console.error(e);
