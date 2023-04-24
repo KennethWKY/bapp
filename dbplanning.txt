@@ -1,0 +1,21 @@
+user: {
+_id: <ObjectId1>,
+username: "kenneth",
+monthlyBudget: {
+                gorcery: 500,
+                eatOut: 500
+                }
+}
+
+transaction: {
+              {
+               type: "grocery",
+               amount: 40,
+               timestamp: 2023/05/16 15:30pm
+              },
+              {
+               type: "grocery",
+               amount: 50,
+               timestamp: 2023/05/16 15:30pm
+              }, 
+             }
