@@ -1,8 +1,12 @@
-export async function getAllExpense() {
-  const res = await fetch("api/expense", {
-    method: "GET",
-  });
-  return res;
+export async function getAllExpense(month: Date) {
+  const formattedMonth =
+    month.toLocaleString("default", { month: "short" }) +
+    " " +
+    month.getFullYear();
+  const res = await fetch(`/api/expense?month=${formattedMonth}`);
+  const data = await res.json();
+  console.log(data);
+  return data;
 }
 
 export function calMonthlyTtlExpense(expenseData: any[]) {

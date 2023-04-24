@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { getAllExpense, calMonthlyTtlExpense } from "../modules/budgetData";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function MonthlyExpense() {
   const [expenseData, setExpenseData] = useState<any[]>([]);
   const [monthlyTtl, setMonthlyTtl] = useState<any[]>([]);
+  const [startDate, setStartDate] = useState(new Date());
 
   //Fetch monthly expense
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getAllExpense();
-      const data = await response.json();
+      const data = await getAllExpense(startDate);
       setExpenseData(data);
 
       //Calculate monthly total expense in each category
@@ -19,12 +21,22 @@ export default function MonthlyExpense() {
       }
     };
     fetchData();
-  }, []);
+    console.log(startDate);
+  }, [startDate]);
 
   return (
     <div className="mt-8">
       <h2 className="text-xl font-bold mb-4">Monthly Expenses</h2>
       <div className="bg-gray-200 p-4 rounded-lg">
+        <div className="mb-4">
+          <span className="font-semibold mr-2">Select Month: </span>
+          <DatePicker
+            selected={startDate}
+            onChange={(date: SetStateAction<Date>) => setStartDate(date)}
+            dateFormat="MM/yyyy"
+            showMonthYearPicker
+          />
+        </div>
         {monthlyTtl ? (
           <ul>
             {monthlyTtl.map((expense) => (
