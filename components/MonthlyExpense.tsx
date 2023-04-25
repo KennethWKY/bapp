@@ -10,6 +10,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import MonthlyTarget from "./MonthlyTarget";
 import RemainToSpend from "./RemainToSpend";
+import BottomNav from "./BottomNav";
+import Skeleton from "./Skeleton";
 
 export default function MonthlyExpense() {
   const [expenseData, setExpenseData] = useState<any[]>([]);
@@ -78,15 +80,10 @@ export default function MonthlyExpense() {
             ))}
           </ul>
         ) : (
-          <p>Loading expense data...</p>
+          <Skeleton />
         )}
       </div>
-      <div className="bg-gray-200 p-4 rounded-lg my-2">
-        <MonthlyTarget monthlyTarget={expenseCategory} income={income} />
-      </div>
-      <div className="bg-gray-200 p-4 rounded-lg my-2">
-        <RemainToSpend remain={remainToSpend} />
-      </div>
+      <BottomNav />
     </div>
   );
 }
