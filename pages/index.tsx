@@ -38,25 +38,29 @@ export default function Home({
   return (
     <div>
       <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        <div className="max-w-md mx-auto p-6 rounded-lg shadow-lg bg-white">
-          <div className="text-3xl text-green-600 mb-4">Budget Gur</div>
-          <p className="mb-2">Welcome, {user?.name}</p>
+        <div className="flex flex-col max-w-md mx-auto p-6 rounded-lg shadow-lg bg-white">
+          <div className="flex justify-between">
+            <div className="text-3xl text-green-600">Budget Gur</div>
+            {user && (
+              <a
+                href="/api/auth/logout"
+                className="block text-center bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+              >
+                Logout
+              </a>
+            )}
+          </div>
+          <p className="text-xl text-gray-500 mt-4">Welcome {user?.name}</p>
           {!user && (
             <a
               href="/api/auth/login"
-              className="mb-4 block text-center bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+              className="mt-4 block text-center bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
             >
               Login
             </a>
           )}
           {user && (
-            <div className="flex flex-col items-center">
-              <a
-                href="/api/auth/logout"
-                className="mb-4 block text-center bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-              >
-                logout
-              </a>
+            <div className="flex flex-col items-center mt-4">
               <CreateUser />
               <BottomNav />
             </div>
