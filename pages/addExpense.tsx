@@ -1,8 +1,9 @@
 import { SetStateAction, useEffect, useState } from "react";
 import { getCategory } from "../modules/budgetData";
 import BottomNav from "../components/BottomNav";
+import { addExpense as addExpenseAPI } from "../modules/budgetData";
 
-export default function AddExpense() {
+export default function addExpense() {
   const [expenseCategory, setExpenseCategory] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -20,14 +21,27 @@ export default function AddExpense() {
     setSelectedCategory(e.target.value);
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = {
+      type: formData.get("type"),
+      descr: formData.get("descr"),
+      amount: parseFloat(formData.get("amount")),
+    };
+    const result = await addExpenseAPI(data);
+    console.log(result);
+  };
+
   return (
     <div>
       <div className="flex flex-col items-center">
         <div className="bg-white shadow-lg rounded-lg px-8 py-6 sm:max-w-md sm:w-full">
-          <div className="text-3xl text-green-600 mb-4">Budger Gur</div>
+          <div className="text-3xl text-green-600 mb-4">Budget Gur</div>
           <div className="flex flex-col items-center bg-white shadow-lg rounded-lg px-8 py-6 sm:max-w-md sm:w-full">
             <div className="text-2xl text-green-600 mb-4">Add Expense</div>
-            <form method="POST" action="/api/expense">
+            <form onSubmit={handleSubmit}>
               <div className="flex flex-col mb-4">
                 <label className="text-lg mb-2" htmlFor="category">
                   Category

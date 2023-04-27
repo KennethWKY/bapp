@@ -1,9 +1,15 @@
+import { useState } from "react";
+import { getUserID } from "./userData";
+
 export async function getAllExpense(month: Date) {
+  const userId = await getUserID();
   const formattedMonth =
     month.toLocaleString("default", { month: "short" }) +
     " " +
     month.getFullYear();
-  const res = await fetch(`/api/expense?month=${formattedMonth}`);
+  const res = await fetch(
+    `/api/expense?month=${formattedMonth}?userId=${userId}`
+  );
   const data = await res.json();
   return data;
 }
@@ -28,7 +34,8 @@ export function calMonthlyTtlExpense(expenseData: any[]) {
 }
 
 export async function getCategory() {
-  const res = await fetch("/api/budget", {
+  const userId = await getUserID();
+  const res = await fetch(`/api/budget?userId=${userId}`, {
     method: "GET",
   });
   const categoryObj = await res.json();
@@ -66,3 +73,56 @@ export async function getIncome() {
   const data = await res.json();
   return data;
 }
+
+export async function postBudgetCategoryAPI(data: any) {
+  const userId = await getUserID();
+  const response = await fetch(`/api/budget?userId=${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ...data, amount: parseFloat(data.amount) }),
+  });
+  return response.json();
+}
+
+export async function addExpense(data: {
+  type: FormDataEntryValue | null;
+  descr: FormDataEntryValue | null;
+  amount: number;
+}) {
+  const userId = await getUserID();
+  const formattedData = {
+    ...data,
+    userId: userId,
+  };
+  const response = await fetch("/api/expense", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formattedData),
+  });
+  return response.json();
+}
+
+export const useFormStatus = () => {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const submitExpense = async (data: {
+    type: FormDataEntryValue | null;
+    descr: FormDataEntryValue | null;
+    amount: number;
+  }) => {
+    try {
+      await addExpense(data);
+      setSuccess(true);
+    } catch (err) {
+      console.error(err);
+      setError(true);
+    }
+  };
+
+  return { success, error, submitExpense };
+};

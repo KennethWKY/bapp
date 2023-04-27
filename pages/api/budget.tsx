@@ -1,26 +1,32 @@
 import clientPromise from "../../lib/mongodb";
-import { Document, ObjectId, UpdateResult, WithId } from "mongodb";
+
+import { Document, UpdateResult, WithId } from "mongodb";
 
 export default async (
-  req: { query?: any; body?: any; method?: any },
+  req: {
+    [x: string]: any;
+    query?: any;
+    body?: any;
+    method?: any;
+  },
   res: {
     json: (arg0: WithId<Document>) => void;
     send: (arg0: UpdateResult) => void;
   }
 ) => {
   const { method } = req;
-  const { pid } = req.query;
+  const owner = "109860914175714638023";
 
   switch (method) {
     case "GET":
       try {
+        const params = new URLSearchParams(req.query);
         const client = await clientPromise;
         const db = client.db("budget");
+        const userId = params.get("userId");
         const user = await db
-          .collection("user_template")
-          .find({})
-          .sort({ metacritic: -1 })
-          .limit(10)
+          .collection("user")
+          .find({ userId: userId })
           .toArray();
         res.json(user[0]);
         break;
@@ -33,11 +39,9 @@ export default async (
         const client = await clientPromise;
         const db = client.db("budget");
         const { type, amount } = req.body;
-        const filter = { _id: new ObjectId("64447d7069d35e23c1b2351c") };
+        const filter = { userId: owner };
         const update = { $set: { [`monthlyBudget.${type}`]: amount } };
-        const result = await db
-          .collection("user_template")
-          .updateOne(filter, update);
+        const result = await db.collection("user").updateOne(filter, update);
         res.send(result);
       } catch (e) {
         console.error(e);

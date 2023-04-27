@@ -1,8 +1,14 @@
 import clientPromise from "../../lib/mongodb";
+
 import { Document, InsertOneResult, ObjectId, WithId } from "mongodb";
 
 export default async (
-  req: { query?: any; body?: any; method?: any },
+  req: {
+    session: any;
+    query?: any;
+    body?: any;
+    method?: any;
+  },
   res: {
     [x: string]: any;
     json: (arg0: WithId<Document>[]) => void;
@@ -10,13 +16,14 @@ export default async (
   }
 ) => {
   const { method } = req;
-  const owner = new ObjectId("64447d7069d35e23c1b2351c");
+  // const owner = "109860914175714638023";
 
   switch (method) {
     //Get all expense in selected month
     case "GET":
       const params = new URLSearchParams(req.query);
       const month = params.get("month");
+      const userId = params.get("userId");
       if (!month) {
         return res.status(400).json({ error: "Missing 'month' parameter" });
       }
@@ -62,9 +69,9 @@ export default async (
         const client = await clientPromise;
         const db = client.db("budget");
         const result = await db
-          .collection("user_transaction_template")
+          .collection("user_transaction")
           .find({
-            owner,
+            userId: userId,
             date: {
               $gte: new Date(startDate),
               $lt: new Date(endDate),
@@ -84,9 +91,9 @@ export default async (
         const client = await clientPromise;
         const db = client.db("budget");
         const date = new Date();
-        const { type, amount, descr } = req.body;
+        const { owner, type, amount, descr } = req.body;
         const result = await db
-          .collection("user_transaction_template")
+          .collection("user_transaction")
           .insertOne({ owner, type, descr, amount, date });
         res.send(result);
       } catch (e) {

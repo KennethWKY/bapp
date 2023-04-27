@@ -4,6 +4,8 @@ import { InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import BottomNav from "../components/BottomNav";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import CreateUser from "../components/CreateUser";
+import { useEffect } from "react";
 
 export async function getServerSideProps() {
   try {
@@ -31,13 +33,13 @@ export async function getServerSideProps() {
 export default function Home({
   isConnected,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { user } = useUser();
-  const userId = user?.sub;
+  const { user, isLoading } = useUser();
+
   return (
-    <div className="flex flex-col items-center">
-      <div className="bg-white shadow-lg rounded-lg px-8 py-6 sm:max-w-md sm:w-full">
+    <div className="flex flex-col items-center ">
+      <div className="bg-white shadow-lg rounded-lg px-8 py-6 sm:max-w-md sm:w-full h-screen md:h-auto ">
         <div className="text-3xl text-green-600 mb-4">Budget Gur</div>
-        Welcome<div>User ID: {userId}</div>
+        Welcome<div> {user?.name}</div>
         <div className="flex flex-col items-center">
           <svg
             width="150px"
@@ -64,9 +66,14 @@ export default function Home({
             ></path>
           </svg>
         </div>
-        <a href="/api/auth/login">Login</a>
-        <a href="/api/auth/logout">logout</a>
-        <BottomNav />
+        {!user && <a href="/api/auth/login">Login</a>}
+        {user && (
+          <div>
+            <a href="/api/auth/logout">logout</a>
+            <CreateUser />
+            <BottomNav />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,10 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 
 export default function BottomNav() {
+  const { user } = useUser();
+  const userId = user?.sub?.split("|")[1];
+
   return (
     <div>
       <div className="mt-5 w-full h-16 max-w-lg  bg-white border border-gray-200 rounded-full  dark:bg-gray-700 dark:border-gray-600">

@@ -1,5 +1,6 @@
 import clientPromise from "../../lib/mongodb";
 import { Document, ObjectId, UpdateResult, WithId } from "mongodb";
+import { getUserID } from "../../modules/userData";
 
 export default async (
   req: { query?: any; body?: any; method?: any },
@@ -9,16 +10,14 @@ export default async (
   }
 ) => {
   const { method } = req;
-  const owner = new ObjectId("64447d7069d35e23c1b2351c");
+  const owner = "109860914175714638023";
 
   switch (method) {
     case "GET":
       try {
         const client = await clientPromise;
         const db = client.db("budget");
-        const data = await db
-          .collection("user_template")
-          .findOne({ _id: owner });
+        const data = await db.collection("user").findOne({ userId: owner });
         if (data) {
           res.json(data.income);
         } else {
@@ -34,12 +33,14 @@ export default async (
         const client = await clientPromise;
         const db = client.db("budget");
         const { income } = req.body;
-        const filter = { _id: owner };
+        const filter = { userId: owner };
         const update = { $set: { income: income } };
-        const result = await db
-          .collection("user_template")
-          .updateOne(filter, update);
-        res.json({ _id: owner, ...result });
+        const result = await db.collection("user").updateOne(filter, update);
+        res.json({
+          userId: owner,
+          ...result,
+          _id: new ObjectId(),
+        });
       } catch (e) {
         console.error(e);
       }

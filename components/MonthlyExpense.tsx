@@ -8,8 +8,6 @@ import {
 } from "../modules/budgetData";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import MonthlyTarget from "./MonthlyTarget";
-import RemainToSpend from "./RemainToSpend";
 import BottomNav from "./BottomNav";
 import Skeleton from "./Skeleton";
 
@@ -32,7 +30,7 @@ export default function MonthlyExpense() {
       setIncome(incomeData);
 
       //Calculate monthly total expense in each category
-      if (monthlyExpenseData) {
+      if (expenseData) {
         //Get Monthly Target
         const categoryData = await getCategory();
         setExpenseCategory(categoryData);
