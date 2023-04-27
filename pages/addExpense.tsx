@@ -36,8 +36,8 @@ export default function addExpense() {
 
   return (
     <div>
-      <div className="flex flex-col items-center">
-        <div className="bg-white shadow-lg rounded-lg px-8 py-6 sm:max-w-md sm:w-full">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="relative max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
           <div className="text-3xl text-green-600 mb-4">Budget Gur</div>
           <div className="flex flex-col items-center bg-white shadow-lg rounded-lg px-8 py-6 sm:max-w-md sm:w-full">
             <div className="text-2xl text-green-600 mb-4">Add Expense</div>

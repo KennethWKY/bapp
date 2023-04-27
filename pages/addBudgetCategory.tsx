@@ -1,14 +1,26 @@
 import React from "react";
 import BottomNav from "../components/BottomNav";
+import { postBudgetCategoryAPI } from "../modules/budgetData";
 
 export default function addBudgetCategory() {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = {
+      type: formData.get("type"),
+      amount: parseFloat(formData.get("amount")),
+    };
+    const result = await postBudgetCategoryAPI(data);
+    console.log(result);
+  };
   return (
     <div>
-      <div className="flex flex-col items-center">
-        <div className="bg-white shadow-lg rounded-lg px-8 py-6 sm:max-w-md sm:w-full">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="relative max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
           <div className="text-3xl text-green-600 mb-4">Budget Gur</div>
           <div className="text-xl font-bold mb-4 mt-8">Add Monthly Budget</div>
-          <form method="POST" action="/api/budget">
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col mb-4">
               <label className="text-lg mb-2" htmlFor="type">
                 Type

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BottomNav from "./BottomNav";
+import Link from "next/link";
 
 export default function MonthlyTarget({
   monthlyTarget,
@@ -23,27 +24,37 @@ export default function MonthlyTarget({
   return (
     <div>
       <div className="py-4">
-        <h2 className="text-xl font-bold mb-4">This Month Budget</h2>
+        <h2 className="text-xl font-bold mb-5">This Month Budget</h2>
         <div className="flex justify-between mb-2">
           <span className="font-semibold">Total Expense:</span>
-          <span>{ttlExpense}</span>
+          <span>$ {ttlExpense}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span className="font-semibold">Income:</span>
-          <span>{income}</span>
+          <span>$ {income}</span>
         </div>
         <div className="flex justify-between mb-2">
           <span className="font-semibold">Savings:</span>
-          <span>{saving}</span>
+          <span>$ {saving}</span>
         </div>
 
         <hr className="my-4" />
-        <h3 className="text-xl font-bold mb-2">This Month Targets</h3>
+        <div className="flex flex-row justify-between mb-5">
+          <h3 className="text-xl font-bold mb-0">This Month Targets</h3>
+          <Link href="/addBudgetCategory">
+            <button
+              className="bg-green-600 text-white py-1 px-4 rounded-lg"
+              type="submit"
+            >
+              Edit
+            </button>
+          </Link>
+        </div>
         <ul className="divide-y divide-gray-400">
           {monthlyTarget.map((data) => (
             <li key={data.category} className="flex justify-between py-2">
               <span className="font-semibold">{data.category}:</span>
-              <span>{data.target}</span>
+              <span>$ {data.target}</span>
             </li>
           ))}
         </ul>

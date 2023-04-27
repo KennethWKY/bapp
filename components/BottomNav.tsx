@@ -41,7 +41,7 @@ export default function BottomNav() {
           </div>
           <Link
             href="/transaction"
-            className="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            className="inline-flex flex-col items-center justify-center px-5  hover:bg-gray-50 dark:hover:bg-gray-800 group"
           >
             <button
               data-tooltip-target="tooltip-wallet"
@@ -76,7 +76,7 @@ export default function BottomNav() {
           <div className="flex items-center justify-center">
             <Link
               href="/addExpense"
-              className="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+              className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
             >
               <button
                 data-tooltip-target="tooltip-new"
@@ -110,7 +110,7 @@ export default function BottomNav() {
           </div>
           <Link
             href="/addBudgetCategory"
-            className="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
           >
             <button
               data-tooltip-target="tooltip-settings"
@@ -138,8 +138,8 @@ export default function BottomNav() {
             <div className="tooltip-arrow" data-popper-arrow></div>
           </div>
           <Link
-            href="/expenseData"
-            className="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            href="/profile"
+            className="inline-flex flex-col items-center justify-center px-5 rounded-r-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
           >
             <button
               data-tooltip-target="tooltip-profile"
