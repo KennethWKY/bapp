@@ -2,6 +2,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { getCategory } from "../modules/budgetData";
 import BottomNav from "../components/BottomNav";
 import { addExpense as addExpenseAPI } from "../modules/budgetData";
+import router from "next/router";
 
 export default function addExpense() {
   const [expenseCategory, setExpenseCategory] = useState<any[]>([]);
@@ -54,6 +55,7 @@ export default function addExpense() {
       amount,
     };
     const result = await addExpenseAPI(data);
+    router.push(router.asPath);
     console.log(result);
   };
 

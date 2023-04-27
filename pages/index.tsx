@@ -1,11 +1,9 @@
 import Head from "next/head";
 import clientPromise from "../lib/mongodb";
 import { InferGetServerSidePropsType } from "next";
-import Link from "next/link";
 import BottomNav from "../components/BottomNav";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import CreateUser from "../components/CreateUser";
-import { useEffect } from "react";
 
 export async function getServerSideProps() {
   try {
@@ -50,7 +48,9 @@ export default function Home({
               </a>
             )}
           </div>
-          <p className="text-xl text-gray-500 mt-4">Welcome {user?.name}</p>
+          {user && (
+            <p className="text-xl text-gray-500 mt-4">Welcome {user?.name}</p>
+          )}
           {!user && (
             <a
               href="/api/auth/login"
