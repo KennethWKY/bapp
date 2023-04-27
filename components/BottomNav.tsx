@@ -7,16 +7,16 @@ export default function BottomNav() {
 
   return (
     <div>
-      <div className="mt-5 w-full h-16 max-w-lg  bg-white border border-gray-200 rounded-full  dark:bg-gray-700 dark:border-gray-600">
+      <div className="mt-5 w-full h-16 max-w-lg  bg-white border border-gray-200 rounded-full  ">
         <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
           <Link
             href="/"
-            className="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            className="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50  group"
           >
             <button
               data-tooltip-target="tooltip-home"
               type="button"
-              className="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+              className="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50  group"
             >
               <svg
                 className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-green-600 dark:group-hover:text-green-500"
@@ -41,12 +41,12 @@ export default function BottomNav() {
           </div>
           <Link
             href="/transaction"
-            className="inline-flex flex-col items-center justify-center px-5  hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            className="inline-flex flex-col items-center justify-center px-5  hover:bg-gray-50 group"
           >
             <button
               data-tooltip-target="tooltip-wallet"
               type="button"
-              className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+              className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group"
             >
               <svg
                 className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-green-600 dark:group-hover:text-green-500"
@@ -68,7 +68,7 @@ export default function BottomNav() {
           <div
             id="tooltip-wallet"
             role="tooltip"
-            className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+            className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip"
           >
             Wallet
             <div className="tooltip-arrow" data-popper-arrow></div>
@@ -76,7 +76,7 @@ export default function BottomNav() {
           <div className="flex items-center justify-center">
             <Link
               href="/addExpense"
-              className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+              className="inline-flex flex-col items-center justify-center  hover:bg-gray-50 group"
             >
               <button
                 data-tooltip-target="tooltip-new"
@@ -110,12 +110,12 @@ export default function BottomNav() {
           </div>
           <Link
             href="/"
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50  group"
           >
             <button
               data-tooltip-target="tooltip-settings"
               type="button"
-              className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+              className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50  group"
             >
               <svg
                 className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-green-600 dark:group-hover:text-green-500"
@@ -139,12 +139,12 @@ export default function BottomNav() {
           </div>
           <Link
             href="/profile"
-            className="inline-flex flex-col items-center justify-center px-5 rounded-r-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            className="inline-flex flex-col items-center justify-center px-5 rounded-r-full hover:bg-gray-50  group"
           >
             <button
               data-tooltip-target="tooltip-profile"
               type="button"
-              className="inline-flex flex-col items-center justify-center px-5 rounded-r-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+              className="inline-flex flex-col items-center justify-center px-5 rounded-r-full hover:bg-gray-50  group"
             >
               <svg
                 className="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-green-600 dark:group-hover:text-green-500"
@@ -165,7 +165,7 @@ export default function BottomNav() {
           <div
             id="tooltip-profile"
             role="tooltip"
-            className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+            className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip "
           >
             Profile
             <div className="tooltip-arrow" data-popper-arrow></div>
