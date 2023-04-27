@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import AddBudgetCategory from "../components/AddBudgetCategory";
 import BottomNav from "../components/BottomNav";
 import MonthlyTarget from "../components/MonthlyTarget";
 import RemainToSpend from "../components/RemainToSpend";
-import MonthlyExpense from "./expenseData";
 import {
   calMonthlyTtlExpense,
   getAllExpense,

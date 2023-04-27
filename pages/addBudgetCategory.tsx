@@ -3,17 +3,38 @@ import BottomNav from "../components/BottomNav";
 import { postBudgetCategoryAPI } from "../modules/budgetData";
 
 export default function addBudgetCategory() {
-  const handleSubmit = async (event) => {
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const formData = new FormData(form);
+  //   const data = {
+  //     type: formData.get("type"),
+  //     amount: parseFloat(formData.get("amount")),
+  //   };
+  //   const result = await postBudgetCategoryAPI(data);
+  //   console.log(result);
+  // };
+  const handleSubmit = async (event: {
+    preventDefault: () => void;
+    target: any;
+  }) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
+    const type = formData.get("type") as string;
+    const amountString = formData.get("amount") as string | null;
+    if (!amountString) {
+      return; // or handle the error as needed
+    }
+    const amount = parseFloat(amountString);
     const data = {
-      type: formData.get("type"),
-      amount: parseFloat(formData.get("amount")),
+      type,
+      amount,
     };
     const result = await postBudgetCategoryAPI(data);
     console.log(result);
   };
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">

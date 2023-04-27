@@ -1,18 +1,28 @@
 import React from "react";
 import { postBudgetCategoryAPI } from "../modules/budgetData";
 
-export default function TestForm() {
-  const handleSubmit = async (event) => {
+export default function AddBudgetCategory() {
+  const handleSubmit = async (event: {
+    preventDefault: () => void;
+    target: any;
+  }) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
+    const type = formData.get("type") as string;
+    const amountString = formData.get("amount") as string | null;
+    if (!amountString) {
+      return; // or handle the error as needed
+    }
+    const amount = parseFloat(amountString);
     const data = {
-      type: formData.get("type"),
-      amount: parseFloat(formData.get("amount")),
+      type,
+      amount,
     };
     const result = await postBudgetCategoryAPI(data);
     console.log(result);
   };
+
   return (
     <div>
       <div className="text-xl font-bold mb-4 mt-8">Add Monthly Budget</div>

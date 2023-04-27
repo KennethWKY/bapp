@@ -87,8 +87,8 @@ export async function postBudgetCategoryAPI(data: any) {
 }
 
 export async function addExpense(data: {
-  type: FormDataEntryValue | null;
-  descr: FormDataEntryValue | null;
+  type: string;
+  descr: string;
   amount: number;
 }) {
   const userId = await getUserID();
@@ -106,23 +106,23 @@ export async function addExpense(data: {
   return response.json();
 }
 
-export const useFormStatus = () => {
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+// export const useFormStatus = () => {
+//   const [success, setSuccess] = useState(false);
+//   const [error, setError] = useState(false);
 
-  const submitExpense = async (data: {
-    type: FormDataEntryValue | null;
-    descr: FormDataEntryValue | null;
-    amount: number;
-  }) => {
-    try {
-      await addExpense(data);
-      setSuccess(true);
-    } catch (err) {
-      console.error(err);
-      setError(true);
-    }
-  };
+//   const submitExpense = async (data: {
+//     type: FormDataEntryValue | null;
+//     descr: FormDataEntryValue | null;
+//     amount: number;
+//   }) => {
+//     try {
+//       await addExpense(data);
+//       setSuccess(true);
+//     } catch (err) {
+//       console.error(err);
+//       setError(true);
+//     }
+//   };
 
-  return { success, error, submitExpense };
-};
+//   return { success, error, submitExpense };
+// };

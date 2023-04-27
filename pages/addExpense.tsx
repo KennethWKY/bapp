@@ -21,14 +21,37 @@ export default function addExpense() {
     setSelectedCategory(e.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const formData = new FormData(form);
+  //   const data = {
+  //     type: formData.get("type"),
+  //     descr: formData.get("descr"),
+  //     amount: parseFloat(formData.get("amount")),
+  //   };
+  //   const result = await addExpenseAPI(data);
+  //   console.log(result);
+  // };
+
+  const handleSubmit = async (event: {
+    preventDefault: () => void;
+    target: any;
+  }) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
+    const type = formData.get("type") as string;
+    const descr = formData.get("descr") as string;
+    const amountString = formData.get("amount") as string | null;
+    if (!amountString) {
+      return; // or handle the error as needed
+    }
+    const amount = parseFloat(amountString);
     const data = {
-      type: formData.get("type"),
-      descr: formData.get("descr"),
-      amount: parseFloat(formData.get("amount")),
+      type,
+      descr,
+      amount,
     };
     const result = await addExpenseAPI(data);
     console.log(result);
