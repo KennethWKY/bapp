@@ -54,9 +54,9 @@ export default function MonthlyTarget({
         <ul className="divide-y divide-gray-400">
           {monthlyTarget.map((data) => (
             <li key={data.category} className="flex justify-between py-2">
-              <span className="font-semibold">{data.category}:</span>
-              <span>$ {data.target}</span>
+              <span className="font-semibold mr-2">{data.category}</span>
               <RemoveCategory category={data.category} />
+              <span>$ {data.target}</span>
             </li>
           ))}
         </ul>

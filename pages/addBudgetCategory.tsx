@@ -1,6 +1,7 @@
 import React from "react";
 import BottomNav from "../components/BottomNav";
 import { postBudgetCategoryAPI } from "../modules/budgetData";
+import { useRouter } from "next/router";
 
 export default function addBudgetCategory() {
   // const handleSubmit = async (event) => {
@@ -14,6 +15,7 @@ export default function addBudgetCategory() {
   //   const result = await postBudgetCategoryAPI(data);
   //   console.log(result);
   // };
+  const router = useRouter();
   const handleSubmit = async (event: {
     preventDefault: () => void;
     target: any;
@@ -31,8 +33,8 @@ export default function addBudgetCategory() {
       type,
       amount,
     };
-    const result = await postBudgetCategoryAPI(data);
-    console.log(result);
+    postBudgetCategoryAPI(data);
+    router.reload();
   };
 
   return (
