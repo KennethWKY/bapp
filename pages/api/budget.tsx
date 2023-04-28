@@ -15,7 +15,7 @@ export default async (
   }
 ) => {
   const { method } = req;
-  const owner = "109860914175714638023";
+  // const owner = "109860914175714638023";
 
   switch (method) {
     case "GET":
@@ -37,9 +37,11 @@ export default async (
     case "POST":
       try {
         const client = await clientPromise;
+        const params = new URLSearchParams(req.query);
         const db = client.db("budget");
+        const userId = params.get("userId");
         const { type, amount } = req.body;
-        const filter = { userId: owner };
+        const filter = { userId: userId };
         const update = { $set: { [`monthlyBudget.${type}`]: amount } };
         const result = await db.collection("user").updateOne(filter, update);
         res.send(result);

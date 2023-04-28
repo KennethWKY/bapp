@@ -1,27 +1,33 @@
 import Head from "next/head";
-import clientPromise from "../lib/mongodb";
-import { InferGetServerSidePropsType } from "next";
 import BottomNav from "../components/BottomNav";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import CreateUser from "../components/CreateUser";
+import { checkUserExist } from "../modules/userData";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  // const [isConnected, setIsConnected] = useState(false);
+  const [userExist, setUserExist] = useState(false);
   const { user } = useUser();
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       await clientPromise;
-  //       setIsConnected(true);
-  //     } catch (e) {
-  //       console.error(e);
-  //       setIsConnected(false);
-  //     }
-  //   }
+  useEffect(() => {
+    async function checkExist() {
+      try {
+        const data = await checkUserExist(user?.sub?.split("|")[1]);
+        console.log(data.result);
+        if (data.result == null) {
+          setUserExist(false);
+        } else {
+          setUserExist(true);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
-  //   fetchData();
-  // }, []);
+    if (user) {
+      checkExist();
+    }
+  }, [user]);
 
   return (
     <div>
@@ -52,6 +58,7 @@ export default function Home() {
           {user && (
             <div className="flex flex-col items-center mt-4">
               <CreateUser />
+
               <BottomNav />
             </div>
           )}

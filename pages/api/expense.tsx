@@ -71,7 +71,7 @@ export default async (
         const result = await db
           .collection("user_transaction")
           .find({
-            userId: userId,
+            owner: userId,
             date: {
               $gte: new Date(startDate),
               $lt: new Date(endDate),

@@ -20,23 +20,30 @@ export async function createUser(userid: any, username: any) {
     monthlyBudget: monthlyBudget,
     income: income,
   };
-  await fetch("/api/account/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ ...userData }),
-  });
+  try {
+    const response = await fetch("/api/account/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...userData }),
+    });
+    const data = await response.json();
+    return data;
+  } catch {
+    (error: any) => console.log(error);
+  }
 }
 
-export async function checkUserExist(user_id: any) {
-  const res = await fetch(`/api/account/exist?userId=${user_id}`, {
+export async function checkUserExist(userId: any) {
+  const res = await fetch(`/api/account/exist?userId=${userId}`, {
     method: "GET",
   });
   const data = await res.json();
   return data;
 }
 
+//Get current logged in userId
 export async function getUserID() {
   const res = await fetch("/api/auth/me", {
     method: "GET",

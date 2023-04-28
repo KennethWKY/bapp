@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const client = await clientPromise;
         const db = client.db("budget");
-        const result = db.collection("user").insertOne(req.body);
+        const result = await db.collection("user").insertOne(req.body);
         res.send(result);
         break;
       } catch (e) {

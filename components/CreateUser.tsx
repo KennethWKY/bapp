@@ -1,48 +1,58 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
 import { checkUserExist, createUser } from "../modules/userData";
+import { error } from "console";
 
-export default function AccountPage() {
+export default function CreatUser() {
   const { user } = useUser();
   const [userId, setUserId] = useState<string | undefined>(undefined);
   const [userName, setUserName] = useState<string | undefined>(undefined);
   const [userExist, setUserExist] = useState(false);
 
-  async function sendCreateUserRequest() {
-    createUser(userId, userName);
-  }
-
-  function handleCreateUser() {
-    setUserId(user?.sub?.split("|")[1]);
-    setUserName(user?.name ?? undefined);
-    sendCreateUserRequest();
+  async function handleCreateUser() {
+    if (user?.sub != undefined) {
+      setUserId(user.sub?.split("|")[1]);
+      setUserName(user.name!);
+      try {
+        await createUser(userId, userName);
+        setUserExist(true);
+      } catch {
+        (error: any) => console.log(error);
+      }
+    }
   }
 
   useEffect(() => {
-    if (user) {
+    async function checkExist() {
       try {
-        checkUserExist(user?.sub?.split("|")[1]).then((result) => {
-          if (result) {
-            setUserExist(true);
-          }
-        });
+        const data = await checkUserExist(user?.sub?.split("|")[1]);
+        console.log(data.result);
+        if (data.result == null) {
+          setUserExist(false);
+        } else {
+          setUserExist(true);
+        }
       } catch (err) {
         console.log(err);
       }
     }
-  }, []);
 
-  //   if (!userExist) {
-  //     setUserId(user?.sub?.split("|")[1]);
-  //     setUserName(user?.name ?? undefined);
-  //     sendCreateUserRequest();
-  //   }
-  // }, []);
+    if (user) {
+      checkExist();
+    }
+  }, [user]);
 
   return (
     <div>
-      {!userExist && (
-        <button onClick={() => handleCreateUser()}>Create Account</button>
+      {userExist == false ? (
+        <button
+          onClick={() => handleCreateUser()}
+          className=" block text-center bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+        >
+          Create Account
+        </button>
+      ) : (
+        <div></div>
       )}
     </div>
   );
