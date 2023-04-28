@@ -1,5 +1,5 @@
 import clientPromise from "../../lib/mongodb";
-
+import { NextApiRequest, NextApiResponse } from "next";
 import { Document, UpdateResult, WithId } from "mongodb";
 
 export default async (
@@ -44,6 +44,21 @@ export default async (
         const filter = { userId: userId };
         const update = { $set: { [`monthlyBudget.${type}`]: amount } };
         const result = await db.collection("user").updateOne(filter, update);
+        res.send(result);
+      } catch (e) {
+        console.error(e);
+      }
+    case "DELETE":
+      try {
+        const client = await clientPromise;
+        const params = new URLSearchParams(req.query);
+        const db = client.db("budget");
+        const userId = params.get("userId");
+        const filter = { userId: userId };
+        const { category } = req.body;
+        const result = await db.collection("user").updateOne(filter, {
+          $unset: { [`monthlyBudget.${category}`]: "" },
+        });
         res.send(result);
       } catch (e) {
         console.error(e);

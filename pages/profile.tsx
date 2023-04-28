@@ -34,7 +34,6 @@ export default function profile() {
         //Get Monthly Target
         const categoryData = await getCategory();
         setExpenseCategory(categoryData);
-
         const result = calMonthlyTtlExpense(monthlyExpenseData);
         setMonthlyTtl(result);
       }

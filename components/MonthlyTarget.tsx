@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BottomNav from "./BottomNav";
 import Link from "next/link";
+import RemoveCategory from "./RemoveCategory";
 
 export default function MonthlyTarget({
   monthlyTarget,
@@ -55,6 +56,7 @@ export default function MonthlyTarget({
             <li key={data.category} className="flex justify-between py-2">
               <span className="font-semibold">{data.category}:</span>
               <span>$ {data.target}</span>
+              <RemoveCategory category={data.category} />
             </li>
           ))}
         </ul>

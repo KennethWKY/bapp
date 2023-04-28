@@ -126,3 +126,15 @@ export async function addExpense(data: {
 
 //   return { success, error, submitExpense };
 // };
+
+export async function deleteCategory(data: any) {
+  const userId = await getUserID();
+  const response = await fetch(`/api/deleteBudgetCategory?userId=${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ category: data }),
+  });
+  return response.json();
+}
