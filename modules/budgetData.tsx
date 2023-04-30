@@ -8,7 +8,7 @@ export async function getAllExpense(month: Date) {
     " " +
     month.getFullYear();
   const res = await fetch(
-    `/api/expense?month=${formattedMonth}?userId=${userId}`
+    `/api/expense?month=${formattedMonth}&userId=${userId}`
   );
   const data = await res.json();
   return data;
@@ -67,11 +67,22 @@ export function getRemainToSpend(expenseData: any[], categoryData: any[]) {
 }
 
 export async function getIncome() {
-  const res = await fetch("/api/income", {
+  const userId = await getUserID();
+  const res = await fetch(`/api/income?userId=${userId}`, {
     method: "GET",
   });
   const data = await res.json();
   return data;
+}
+
+export async function setIncome(income: string) {
+  const userId = await getUserID();
+  const data = { income: income };
+  const res = await fetch(`/api/income?userId=${userId}`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+  return res.json();
 }
 
 export async function postBudgetCategoryAPI(data: any) {
@@ -94,7 +105,7 @@ export async function addExpense(data: {
   const userId = await getUserID();
   const formattedData = {
     ...data,
-    userId: userId,
+    owner: userId,
   };
   const response = await fetch("/api/expense", {
     method: "POST",

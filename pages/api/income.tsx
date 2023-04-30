@@ -10,14 +10,16 @@ export default async (
   }
 ) => {
   const { method } = req;
-  const owner = "109860914175714638023";
+  // const owner = "109860914175714638023";
 
   switch (method) {
     case "GET":
       try {
         const client = await clientPromise;
         const db = client.db("budget");
-        const data = await db.collection("user").findOne({ userId: owner });
+        const params = new URLSearchParams(req.query);
+        const userId = params.get("userId");
+        const data = await db.collection("user").findOne({ userId: userId });
         if (data) {
           res.json(data.income);
         } else {
@@ -32,12 +34,14 @@ export default async (
       try {
         const client = await clientPromise;
         const db = client.db("budget");
-        const { income } = req.body;
-        const filter = { userId: owner };
-        const update = { $set: { income: income } };
+        const params = new URLSearchParams(req.query);
+        const userId = params.get("userId");
+        const { income } = JSON.parse(req.body);
+        const filter = { userId: userId };
+        const update = { $set: { income: parseFloat(income) } };
         const result = await db.collection("user").updateOne(filter, update);
         res.json({
-          userId: owner,
+          userId: userId,
           ...result,
           _id: new ObjectId(),
         });

@@ -13,7 +13,6 @@ export default function Home() {
     async function checkExist() {
       try {
         const data = await checkUserExist(user?.sub?.split("|")[1]);
-        console.log(data.result);
         if (data.result == null) {
           setUserExist(false);
         } else {

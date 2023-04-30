@@ -1,19 +1,10 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 
-export function getUserName(): string | undefined {
-  const { user } = useUser();
-  if (user?.name) {
-    const userName = user?.name;
-    return userName;
-  }
-  return undefined;
-}
-
-export async function createUser(userid: any, username: any) {
-  const userId = userid;
-  const userName = username;
+export async function createUser() {
+  const userId = await getUserID();
+  const userName = await getUserName();
   const monthlyBudget = {};
-  const income = null;
+  const income = 0;
   const userData = {
     userId: userId,
     userName: userName,
@@ -52,4 +43,14 @@ export async function getUserID() {
   const userId = data.sub.split("|")[1];
 
   return userId;
+}
+
+export async function getUserName() {
+  const res = await fetch("/api/auth/me", {
+    method: "GET",
+  });
+  const data = await res.json();
+  const userName = data.name;
+
+  return userName;
 }

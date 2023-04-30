@@ -11,10 +11,8 @@ export default function CreatUser() {
 
   async function handleCreateUser() {
     if (user?.sub != undefined) {
-      setUserId(user.sub?.split("|")[1]);
-      setUserName(user.name!);
       try {
-        await createUser(userId, userName);
+        await createUser();
         setUserExist(true);
       } catch {
         (error: any) => console.log(error);
@@ -26,7 +24,6 @@ export default function CreatUser() {
     async function checkExist() {
       try {
         const data = await checkUserExist(user?.sub?.split("|")[1]);
-        console.log(data.result);
         if (data.result == null) {
           setUserExist(false);
         } else {
