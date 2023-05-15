@@ -16,13 +16,17 @@ export default function RemainToSpend({
 
             <div className="flex items-center justify-between w-full">
               <div className="bg-white h-2 rounded-full w-full">
-                <div
-                  className="h-full bg-green-500 rounded-full"
-                  style={{
-                    width: `${(data.difference / data.target) * 100}%`,
-                    transform: "scaleX(-1)",
-                  }}
-                ></div>
+                {(data.difference / data.target) * 100 >= 0 ? (
+                  <div
+                    className="h-full bg-green-500 rounded-full"
+                    style={{
+                      width: `${(data.difference / data.target) * 100}%`,
+                      transform: "scaleX(-1)",
+                    }}
+                  ></div>
+                ) : (
+                  <div className="h-full bg-red-500 rounded-full"></div>
+                )}
               </div>
             </div>
           </li>
