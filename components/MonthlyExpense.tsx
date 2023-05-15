@@ -71,9 +71,12 @@ export default function MonthlyExpense() {
               <li key={expense._id} className="flex justify-between py-2">
                 <div>
                   <span className="font-semibold pr-3">{expense.descr}</span>
-                  <span className="font-semibold">({expense.type})</span>
+                  <span className="font-semibold">({expense.type} </span>
+                  <span className="font-semibold">
+                    {new Date(expense.date).toLocaleDateString()})
+                  </span>
                 </div>
-                <span>$ {expense.amount}</span>
+                <span className="font-semibold">$ {expense.amount}</span>
               </li>
             ))}
           </ul>

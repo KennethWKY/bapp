@@ -10,7 +10,12 @@ export default function RemoveCategory({ category }: { category: string }) {
 
   return (
     <div>
-      <button onClick={() => handleSubmit()}>remove</button>
+      <button
+        onClick={() => handleSubmit()}
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-1 rounded"
+      >
+        remove
+      </button>
     </div>
   );
 }
