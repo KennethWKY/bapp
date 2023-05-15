@@ -73,7 +73,8 @@ export default function MonthlyExpense() {
                   <span className="font-semibold pr-3">{expense.descr}</span>
                   <span className="font-semibold">({expense.type} </span>
                   <span className="font-semibold">
-                    {new Date(expense.date).toLocaleDateString()})
+                    {new Date(expense.date).getMonth() + 1}/
+                    {new Date(expense.date).getDate()})
                   </span>
                 </div>
                 <span className="font-semibold">$ {expense.amount}</span>

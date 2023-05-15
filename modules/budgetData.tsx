@@ -61,6 +61,7 @@ export function getRemainToSpend(expenseData: any[], categoryData: any[]) {
     return {
       category: categoryName,
       difference,
+      target,
     };
   });
   return differences;

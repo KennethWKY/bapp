@@ -109,7 +109,7 @@ export default function BottomNav() {
             <div className="tooltip-arrow" data-popper-arrow></div>
           </div>
           <Link
-            href="/"
+            href="/expenseData"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50  group"
           >
             <button
