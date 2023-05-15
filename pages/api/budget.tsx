@@ -29,7 +29,7 @@ export default async (
           .find({ userId: userId })
           .toArray();
         res.json(user[0]);
-        break;
+        return;
       } catch (e) {
         console.error(e);
       }
@@ -45,6 +45,7 @@ export default async (
         const update = { $set: { [`monthlyBudget.${type}`]: amount } };
         const result = await db.collection("user").updateOne(filter, update);
         res.send(result);
+        return;
       } catch (e) {
         console.error(e);
       }
@@ -60,6 +61,7 @@ export default async (
           $unset: { [`monthlyBudget.${category}`]: "" },
         });
         res.send(result);
+        return;
       } catch (e) {
         console.error(e);
       }

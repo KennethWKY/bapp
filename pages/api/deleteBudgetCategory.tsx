@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           $unset: { [`monthlyBudget.${category}`]: "" },
         });
         res.send(result);
-        break;
+        return;
       } catch (e) {
         console.error(e);
       }

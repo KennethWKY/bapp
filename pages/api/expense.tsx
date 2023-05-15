@@ -81,7 +81,7 @@ export default async (
           .limit(10)
           .toArray();
         res.json(result);
-        break;
+        return;
       } catch (e) {
         console.error(e);
       }
@@ -96,6 +96,7 @@ export default async (
           .collection("user_transaction")
           .insertOne({ owner, type, descr, amount, date });
         res.send(result);
+        return;
       } catch (e) {
         console.error(e);
       }

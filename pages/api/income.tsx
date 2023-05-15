@@ -25,7 +25,7 @@ export default async (
         } else {
           console.log("income is null");
         }
-        break;
+        return;
       } catch (e) {
         console.error(e);
       }
@@ -45,6 +45,7 @@ export default async (
           ...result,
           _id: new ObjectId(),
         });
+        return;
       } catch (e) {
         console.error(e);
       }
