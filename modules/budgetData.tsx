@@ -150,3 +150,18 @@ export async function deleteCategory(data: any) {
   });
   return response.json();
 }
+
+export async function postFixedExpense(data: {
+  category: string;
+  cost: string;
+}) {
+  const userId = await getUserID();
+  const response = await fetch(`/api/fixedExpense?userId=${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ...data, cost: parseFloat(data.cost) }),
+  });
+  return response.json();
+}

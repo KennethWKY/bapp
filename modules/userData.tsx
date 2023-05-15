@@ -4,11 +4,13 @@ export async function createUser() {
   const userId = await getUserID();
   const userName = await getUserName();
   const monthlyBudget = {};
+  const fixedExpense = {};
   const income = 0;
   const userData = {
     userId: userId,
     userName: userName,
     monthlyBudget: monthlyBudget,
+    fixedExpense: fixedExpense,
     income: income,
   };
   try {

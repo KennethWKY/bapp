@@ -10,6 +10,7 @@ import {
   getRemainToSpend,
 } from "../modules/budgetData";
 import Skeleton from "../components/Skeleton";
+import AddFixedExpense from "../components/AddFixedExpense";
 
 export default function profile() {
   const [expenseData, setExpenseData] = useState<any[]>([]);
@@ -64,15 +65,8 @@ export default function profile() {
                 <Skeleton />
               )}
             </div>
-            {/* <div className="bg-gray-200 p-4 rounded-lg my-2">
-              {remainToSpend ? (
-                <RemainToSpend remain={remainToSpend} />
-              ) : (
-                <Skeleton />
-              )}
-            </div> */}
+            <AddFixedExpense />
           </div>
-
           <BottomNav />
         </div>
       </div>
