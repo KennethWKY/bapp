@@ -177,25 +177,31 @@ export async function postFixedExpense(data: {
   cost: number;
 }) {
   console.log(data);
-  const userId = await getUserID();
-  const response = await fetch(`/api/fixedExpense?userId=${userId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+  //const userId = await getUserID();
+  const response = await fetch(
+    `/api/fixedExpense?userId=${await initUserId()}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
   return response.json();
 }
 
 export async function deleteFixedExpense(data: any) {
   //const userId = await getUserID();
-  const response = await fetch(`/api/deleteFixedExpense?userId=${userId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+  const response = await fetch(
+    `/api/deleteFixedExpense?userId=${await initUserId()}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
   return response.json();
 }
