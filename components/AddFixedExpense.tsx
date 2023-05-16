@@ -10,7 +10,7 @@ export default function AddFixedExpense() {
     const form = event.target;
     const formData = new FormData(form);
     const category = formData.get("category") as string;
-    const cost = formData.get("cost") as string;
+    const cost = formData.get("cost") as unknown as number;
     const data = {
       category,
       cost,
@@ -36,7 +36,7 @@ export default function AddFixedExpense() {
           <label className="block text-gray-700 font-bold mb-2">Cost:</label>
           <input
             name="cost"
-            type="text"
+            type="number"
             className="border border-gray-400 p-2 rounded-lg w-full"
           />
         </div>
