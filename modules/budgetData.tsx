@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { getUserID } from "./userData";
 
+let userId: string | null = null;
+let monthlyTransactions: number | null = null;
+let monthlyTtlExpense: any | null = null;
+
+async function initUserId() {
+  if (!userId) {
+    userId = await getUserID(); // Call getUserID only if the user ID is not available
+  }
+  return userId;
+}
+
 export async function getAllExpense(month: Date) {
-  const userId = await getUserID();
   const formattedMonth =
     month.toLocaleString("default", { month: "short" }) +
     " " +
     month.getFullYear();
   const res = await fetch(
-    `/api/expense?month=${formattedMonth}&userId=${userId}`
+    `/api/expense?month=${formattedMonth}&userId=${await initUserId()}`
   );
   const data = await res.json();
   return data;
@@ -29,13 +39,12 @@ export function calMonthlyTtlExpense(expenseData: any[]) {
     type,
     amount,
   }));
-
   return monthlyTtl;
 }
 
 export async function getCategory() {
-  const userId = await getUserID();
-  const res = await fetch(`/api/budget?userId=${userId}`, {
+  //const userId = await getUserID();
+  const res = await fetch(`/api/budget?userId=${await initUserId()}`, {
     method: "GET",
   });
   const categoryObj = await res.json();
@@ -47,8 +56,8 @@ export async function getCategory() {
 }
 
 export async function getFixedExpense() {
-  const userId = await getUserID();
-  const res = await fetch(`/api/fixedExpense?userId=${userId}`, {
+  //const userId = await getUserID();
+  const res = await fetch(`/api/fixedExpense?userId=${await initUserId()}`, {
     method: "GET",
   });
   const categoryObj = await res.json();
@@ -82,8 +91,8 @@ export function getRemainToSpend(expenseData: any[], categoryData: any[]) {
 }
 
 export async function getIncome() {
-  const userId = await getUserID();
-  const res = await fetch(`/api/income?userId=${userId}`, {
+  //const userId = await getUserID();
+  const res = await fetch(`/api/income?userId=${await initUserId()}`, {
     method: "GET",
   });
   const data = await res.json();
@@ -91,9 +100,9 @@ export async function getIncome() {
 }
 
 export async function setIncome(income: string) {
-  const userId = await getUserID();
+  //const userId = await getUserID();
   const data = { income: income };
-  const res = await fetch(`/api/income?userId=${userId}`, {
+  const res = await fetch(`/api/income?userId=${await initUserId()}`, {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -101,8 +110,8 @@ export async function setIncome(income: string) {
 }
 
 export async function postBudgetCategoryAPI(data: any) {
-  const userId = await getUserID();
-  const response = await fetch(`/api/budget?userId=${userId}`, {
+  //const userId = await getUserID();
+  const response = await fetch(`/api/budget?userId=${await initUserId()}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -134,26 +143,32 @@ export async function addExpense(data: {
 }
 
 export async function deleteTransaction(data: any) {
-  const userId = await getUserID();
-  const response = await fetch(`/api/deleteTransaction?userId=${userId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+  //const userId = await getUserID();
+  const response = await fetch(
+    `/api/deleteTransaction?userId=${await initUserId()}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
   return response.json();
 }
 
 export async function deleteCategory(data: any) {
-  const userId = await getUserID();
-  const response = await fetch(`/api/deleteBudgetCategory?userId=${userId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+  //const userId = await getUserID();
+  const response = await fetch(
+    `/api/deleteBudgetCategory?userId=${await initUserId()}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
   return response.json();
 }
 
@@ -174,7 +189,7 @@ export async function postFixedExpense(data: {
 }
 
 export async function deleteFixedExpense(data: any) {
-  const userId = await getUserID();
+  //const userId = await getUserID();
   const response = await fetch(`/api/deleteFixedExpense?userId=${userId}`, {
     method: "POST",
     headers: {
