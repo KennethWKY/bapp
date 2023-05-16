@@ -13,22 +13,20 @@ export default async (
   switch (method) {
     case "GET":
       try {
+        const params = new URLSearchParams(req.query);
         const client = await clientPromise;
         const db = client.db("budget");
-        const params = new URLSearchParams(req.query);
         const userId = params.get("userId");
-        const data = await db
-          .collection("user_fixedExpense")
-          .findOne({ userId: userId });
-        if (data) {
-          res.json(data.income);
-        } else {
-          console.log("No matching result");
-        }
+        const user = await db
+          .collection("user")
+          .find({ userId: userId })
+          .toArray();
+        res.json(user[0]);
         return;
       } catch (e) {
         console.error(e);
       }
+
     // Change or Add fixed expense
     case "POST":
       try {

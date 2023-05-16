@@ -1,10 +1,10 @@
 import React from "react";
 import BottomNav from "../components/BottomNav";
-import { postBudgetCategoryAPI } from "../modules/budgetData";
+import { postBudgetCategoryAPI, postFixedExpense } from "../modules/budgetData";
 import { useRouter } from "next/router";
-import ModifyBudget from "../components/ModifyBudget";
+import ModifyFixedExpense from "../components/ModifyFixedExpense";
 
-export default function addBudgetCategory() {
+export default function addFixedExpense() {
   // const handleSubmit = async (event) => {
   //   event.preventDefault();
   //   const form = event.target;
@@ -24,17 +24,17 @@ export default function addBudgetCategory() {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
-    const type = formData.get("type") as string;
-    const amountString = formData.get("amount") as string | null;
+    const category = formData.get("category") as string;
+    const amountString = formData.get("cost") as string | null;
     if (!amountString) {
       return; // or handle the error as needed
     }
-    const amount = parseFloat(amountString);
+    const cost = parseFloat(amountString);
     const data = {
-      type,
-      amount,
+      category,
+      cost,
     };
-    postBudgetCategoryAPI(data);
+    postFixedExpense(data);
     router.reload();
   };
 
@@ -43,29 +43,29 @@ export default function addBudgetCategory() {
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <div className="relative max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
           <div className="text-3xl text-green-600 mb-4">Budget Gur</div>
-          <ModifyBudget />
-          <div className="text-xl font-bold mb-4 mt-8">Add Monthly Budget</div>
+          <ModifyFixedExpense />
+          <div className="text-xl font-bold mb-4 mt-8">Add Fixed Expense</div>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col mb-4">
-              <label className="text-lg mb-2" htmlFor="type">
-                Type
+              <label className="text-lg mb-2" htmlFor="category">
+                Category
               </label>
               <input
                 className="border border-gray-400 p-2 rounded-lg"
                 type="text"
-                name="type"
-                id="type"
+                name="category"
+                id="category"
               />
             </div>
             <div className="flex flex-col mb-4">
-              <label className="text-lg mb-2" htmlFor="amount">
-                Amount
+              <label className="text-lg mb-2" htmlFor="cost">
+                Cost
               </label>
               <input
                 className="border border-gray-400 p-2 rounded-lg"
                 type="number"
-                name="amount"
-                id="amount"
+                name="cost"
+                id="cost"
               />
             </div>
             <button

@@ -21,9 +21,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const client = await clientPromise;
         const db = client.db("budget");
         const filter = { userId: userId };
-        const { type } = req.body;
+        const { category } = req.body;
         const result = await db.collection("user").updateOne(filter, {
-          $unset: { [`monthlyBudget.${type}`]: "" },
+          $unset: { [`fixedExpense.${category}`]: "" },
         });
         res.send(result);
         return;

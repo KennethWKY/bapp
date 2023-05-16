@@ -46,6 +46,20 @@ export async function getCategory() {
   return categoryArr;
 }
 
+export async function getFixedExpense() {
+  const userId = await getUserID();
+  const res = await fetch(`/api/fixedExpense?userId=${userId}`, {
+    method: "GET",
+  });
+  const categoryObj = await res.json();
+  const categoryArr = Object.keys(categoryObj.fixedExpense).map((key) => ({
+    category: key,
+    cost: categoryObj.fixedExpense[key],
+  }));
+  console.log(categoryArr);
+  return categoryArr;
+}
+
 export function getRemainToSpend(expenseData: any[], categoryData: any[]) {
   // Group expenses by type
   const expensesByType = expenseData.reduce((acc, cur) => {
@@ -95,7 +109,8 @@ export async function postBudgetCategoryAPI(data: any) {
     },
     body: JSON.stringify({ ...data, amount: parseFloat(data.amount) }),
   });
-  return response.json();
+  const updatedDocument = await response.json();
+  return updatedDocument;
 }
 
 export async function addExpense(data: {
@@ -146,22 +161,35 @@ export async function deleteCategory(data: any) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ category: data }),
+    body: JSON.stringify(data),
   });
   return response.json();
 }
 
 export async function postFixedExpense(data: {
   category: string;
-  cost: string;
+  cost: number;
 }) {
+  console.log(data);
   const userId = await getUserID();
   const response = await fetch(`/api/fixedExpense?userId=${userId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ ...data, cost: parseFloat(data.cost) }),
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+export async function deleteFixedExpense(data: any) {
+  const userId = await getUserID();
+  const response = await fetch(`/api/deleteFixedExpense?userId=${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   });
   return response.json();
 }

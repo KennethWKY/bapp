@@ -56,9 +56,9 @@ export default async (
         const db = client.db("budget");
         const userId = params.get("userId");
         const filter = { userId: userId };
-        const { category } = req.body;
+        const { type } = req.body;
         const result = await db.collection("user").updateOne(filter, {
-          $unset: { [`monthlyBudget.${category}`]: "" },
+          $unset: { [`monthlyBudget.${type}`]: "" },
         });
         res.send(result);
         return;

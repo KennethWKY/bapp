@@ -8,6 +8,7 @@ import {
   getCategory,
   getIncome,
   getRemainToSpend,
+  getFixedExpense,
 } from "../modules/budgetData";
 import Skeleton from "../components/Skeleton";
 import AddFixedExpense from "../components/AddFixedExpense";
@@ -19,6 +20,7 @@ export default function profile() {
   const [expenseCategory, setExpenseCategory] = useState<any[]>([]);
   const [remainToSpend, setRemainToSpend] = useState<any[]>([]);
   const [income, setIncome] = useState(0);
+  const [fixedExpense, setFixedExpense] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +37,9 @@ export default function profile() {
         //Get Monthly Target
         const categoryData = await getCategory();
         setExpenseCategory(categoryData);
+        //Fetch fixed expense
+        const fixedExpenseData = await getFixedExpense();
+        setFixedExpense(fixedExpenseData);
         const result = calMonthlyTtlExpense(monthlyExpenseData);
         setMonthlyTtl(result);
       }
@@ -60,12 +65,12 @@ export default function profile() {
                 <MonthlyTarget
                   monthlyTarget={expenseCategory}
                   income={income}
+                  fixedExpense={fixedExpense}
                 />
               ) : (
                 <Skeleton />
               )}
             </div>
-            <AddFixedExpense />
           </div>
           <BottomNav />
         </div>

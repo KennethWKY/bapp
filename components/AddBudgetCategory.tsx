@@ -1,7 +1,13 @@
-import React from "react";
-import { postBudgetCategoryAPI } from "../modules/budgetData";
+import React, { useState } from "react";
+import { getAllExpense, postBudgetCategoryAPI } from "../modules/budgetData";
+import { useRouter } from "next/router";
 
-export default function AddBudgetCategory() {
+export default async function AddBudgetCategory() {
+  const [startDate, setStartDate] = useState(new Date());
+  const [expenseData, setExpenseData] = useState<any[]>([]);
+  const monthlyExpenseData = await getAllExpense(startDate);
+  setExpenseData(monthlyExpenseData);
+
   const handleSubmit = async (event: {
     preventDefault: () => void;
     target: any;
@@ -26,7 +32,7 @@ export default function AddBudgetCategory() {
   return (
     <div>
       <div className="text-xl font-bold mb-4 mt-8">Add Monthly Budget</div>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <div className="flex flex-col mb-4">
           <label className="text-lg mb-2" htmlFor="type">
             Type
@@ -57,7 +63,7 @@ export default function AddBudgetCategory() {
         >
           Submit
         </button>
-      </form>
+      </form> */}
     </div>
   );
 }
