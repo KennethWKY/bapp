@@ -133,26 +133,17 @@ export async function addExpense(data: {
   return response.json();
 }
 
-// export const useFormStatus = () => {
-//   const [success, setSuccess] = useState(false);
-//   const [error, setError] = useState(false);
-
-//   const submitExpense = async (data: {
-//     type: FormDataEntryValue | null;
-//     descr: FormDataEntryValue | null;
-//     amount: number;
-//   }) => {
-//     try {
-//       await addExpense(data);
-//       setSuccess(true);
-//     } catch (err) {
-//       console.error(err);
-//       setError(true);
-//     }
-//   };
-
-//   return { success, error, submitExpense };
-// };
+export async function deleteTransaction(data: any) {
+  const userId = await getUserID();
+  const response = await fetch(`/api/deleteTransaction?userId=${userId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
 
 export async function deleteCategory(data: any) {
   const userId = await getUserID();
