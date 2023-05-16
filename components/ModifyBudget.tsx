@@ -45,7 +45,10 @@ export default function ModifyBudget() {
   return (
     <div>
       {expenseCategory.map((data) => (
-        <div className="flex flex-row items-center justify-between">
+        <div
+          className="flex flex-row items-center justify-between"
+          key={data.category}
+        >
           <label className="mr-2">{data.category}</label>
           <div className="flex flex-row items-center m-1">
             <input

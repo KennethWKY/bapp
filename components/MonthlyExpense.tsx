@@ -5,11 +5,13 @@ import {
   getCategory,
   getRemainToSpend,
   getIncome,
+  deleteTransaction,
 } from "../modules/budgetData";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import BottomNav from "./BottomNav";
 import Skeleton from "./Skeleton";
+import router from "next/router";
 
 export default function MonthlyExpense() {
   const [expenseData, setExpenseData] = useState<any[]>([]);
@@ -51,6 +53,11 @@ export default function MonthlyExpense() {
     fetchData();
   }, [startDate]);
 
+  function handleDelete(transactionId: any) {
+    deleteTransaction(transactionId);
+    router.reload();
+  }
+
   return (
     <div className="mt-8">
       <h2 className="text-xl font-bold mb-4">Monthly Expenses</h2>
@@ -81,9 +88,9 @@ export default function MonthlyExpense() {
                   <span className="font-semibold mr-2">$ {expense.amount}</span>
                   <button
                     className="px-2 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                    // onClick={() => handleDelete(data.category, data.cost)}
+                    onClick={() => handleDelete(expense._id)}
                   >
-                    -
+                    x
                   </button>
                 </div>
               </li>

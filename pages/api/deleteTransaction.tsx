@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
-  const { userId } = req.query;
+  const { transactionId } = req.query;
 
   switch (method) {
     case "GET":
@@ -20,11 +21,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const client = await clientPromise;
         const db = client.db("budget");
-        const filter = { userId: userId };
-        const { category } = req.body;
         const result = await db
           .collection("user_transaction")
-          .deleteOne({ userId: userId });
+          .deleteOne({ _id: new ObjectId(transactionId?.toString()) });
         res.send(result);
         return;
       } catch (e) {

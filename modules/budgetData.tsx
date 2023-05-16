@@ -127,7 +127,7 @@ export async function addExpense(data: {
   descr: string;
   amount: number;
 }) {
-  const userId = await getUserID();
+  const userId = await initUserId();
   const formattedData = {
     ...data,
     owner: userId,
@@ -144,16 +144,12 @@ export async function addExpense(data: {
 
 export async function deleteTransaction(data: any) {
   //const userId = await getUserID();
-  const response = await fetch(
-    `/api/deleteTransaction?userId=${await initUserId()}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }
-  );
+  const response = await fetch(`/api/deleteTransaction?transactionId=${data}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   return response.json();
 }
 
@@ -176,7 +172,6 @@ export async function postFixedExpense(data: {
   category: string;
   cost: number;
 }) {
-  console.log(data);
   //const userId = await getUserID();
   const response = await fetch(
     `/api/fixedExpense?userId=${await initUserId()}`,
