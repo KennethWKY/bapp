@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import BottomNav from "../components/BottomNav";
 import MonthlyTarget from "../components/MonthlyTarget";
-import RemainToSpend from "../components/RemainToSpend";
 import {
   calMonthlyTtlExpense,
   getAllExpense,
@@ -11,7 +10,6 @@ import {
   getFixedExpense,
 } from "../modules/budgetData";
 import Skeleton from "../components/Skeleton";
-import AddFixedExpense from "../components/AddFixedExpense";
 
 export default function profile() {
   const [expenseData, setExpenseData] = useState<any[]>([]);
